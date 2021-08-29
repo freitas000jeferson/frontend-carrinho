@@ -5,13 +5,18 @@ import IProduct from '../../interfaces/IProduct';
 import image from "../../assets/image.svg";
 
 import { CardContainer, Infos, ListRate } from './styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProductCar } from '../../store/ProductCarStore/ProductCarStore.actions';
+import ICarStore from '../../interfaces/ICar';
 
 const Card = (props: IProduct) => {
+    const dispatch = useDispatch();
+    const car:ICarStore =  useSelector((state:any)=> state.productCarStore);
+
     let history = useHistory();
 
     const starsAux = [1, 2, 3, 4, 5];
     const [rate] = useState<number>(Math.random() * 5);
-    const [isAdded, setIsAdded] = useState<boolean>(false);
     const [data, setData] = useState<IProduct>({
         id: 1,
         name: "",
@@ -20,7 +25,7 @@ const Card = (props: IProduct) => {
         length: 0
     });
     useEffect(() => {
-        setData({ ...props, length: 0 });
+        setData({ ...props });
     }, [props]);
 
     return <CardContainer key={data.id.toString()}
@@ -41,7 +46,6 @@ const Card = (props: IProduct) => {
                         return <span className="fa fa-star star"></span>
                     })
                 }
-
             </ListRate>
             <p>{(data.description)}</p>
             <h1>R$ {data.price.toFixed(2)}</h1>
@@ -50,11 +54,14 @@ const Card = (props: IProduct) => {
             <button className="btn-add-car"
                 onClick={(e: any) => {
                     e.preventDefault();
-                    if (!isAdded) setIsAdded(true);
+                    if (!car.products[data.id]) {
+                        dispatch(addProductCar(data, 1));
+                    }
+                    console.log(car);
                     history.push(`/my-car`);
                     // TODO: add função pra ir para o carrinho
                 }}>{
-                    (!isAdded) ?
+                    (!car.products[data.id]) ?
                         "ADICIONAR AO CARRINHO" :
                         "VER CARRINHO"
                 }

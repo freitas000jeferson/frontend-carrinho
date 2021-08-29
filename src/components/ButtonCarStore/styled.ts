@@ -9,7 +9,7 @@ export const ButtonCarComponent: any = styled.button`
     border: none;
     color:#4d4d4d;
     box-shadow: none;
-    
+    position: relative;
     i{ 
         color:#4d4d4d;
         font-size:25px;
@@ -17,5 +17,17 @@ export const ButtonCarComponent: any = styled.button`
     span{ 
         color:#4d4d4d;
         font-size:12px;
+    }
+    div#icon-length{
+        width: 15px;
+        height: 15px;
+        text-align: center;
+        background-color: red;
+        color: white;
+        font-size: 10px;
+        position: absolute;
+        border-radius: 50%;
+        top: 32px;
+        left: 40px;
     }
 `
