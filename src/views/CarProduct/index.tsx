@@ -17,7 +17,7 @@ const CarProductView: React.FC = () => {
     useEffect(() => {
         init();
         // console.log(metaData);
-    }, [])
+    },)
 
     const init = () => {
         setProduct( Object.values(car.products))
